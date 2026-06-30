@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lead-engine
+  labels:
+    app.kubernetes.io/name: lead-engine
+    app.kubernetes.io/part-of: lead-engine-k8s
