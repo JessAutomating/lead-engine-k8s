@@ -22,9 +22,9 @@ metadata:
   labels:
     app.kubernetes.io/name: lead-engine
 data:
-  naples.json: |
+  region-one.json: |
     {
-      "region": "naples",
+      "region": "region-one",
       "segments": [
         { "segment": "placeholder-segment-a", "query": "placeholder segment a businesses near region", "min_score": 7 },
         { "segment": "placeholder-segment-b", "query": "placeholder segment b businesses near region", "min_score": 7 },
@@ -34,11 +34,11 @@ data:
       "sheets": { "tab_qualified": "Qualified", "tab_low_score": "LowScore" },
       "notify": { "subject_prefix": "[Lead Engine]" },
       "limits": { "max_results_per_segment": 20, "audit_char_limit": 2500, "request_timeout_ms": 30000, "max_retries": 3 },
-      "region_filter": ["naples", "marco island"]
+      "region_filter": ["region one"]
     }
-  fort-myers.json: |
+  region-two.json: |
     {
-      "region": "fort-myers",
+      "region": "region-two",
       "segments": [
         { "segment": "placeholder-segment-a", "query": "placeholder segment a businesses near region", "min_score": 7 },
         { "segment": "placeholder-segment-b", "query": "placeholder segment b businesses near region", "min_score": 7 },
@@ -48,5 +48,5 @@ data:
       "sheets": { "tab_qualified": "Qualified", "tab_low_score": "LowScore" },
       "notify": { "subject_prefix": "[Lead Engine]" },
       "limits": { "max_results_per_segment": 20, "audit_char_limit": 2500, "request_timeout_ms": 30000, "max_retries": 3 },
-      "region_filter": ["fort myers", "bonita springs", "estero", "cape coral"]
+      "region_filter": ["region two"]
     }

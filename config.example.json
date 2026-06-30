@@ -1,5 +1,5 @@
 {
-  "region": "naples",
+  "region": "demo",
   "segments": [
     { "segment": "placeholder-segment-a", "query": "placeholder segment a businesses near region", "min_score": 7 },
     { "segment": "placeholder-segment-b", "query": "placeholder segment b businesses near region", "min_score": 7 },
@@ -23,5 +23,5 @@
     "request_timeout_ms": 30000,
     "max_retries": 3
   },
-  "region_filter": ["naples", "fort myers", "bonita springs", "estero", "marco island", "cape coral"]
+  "region_filter": []
 }

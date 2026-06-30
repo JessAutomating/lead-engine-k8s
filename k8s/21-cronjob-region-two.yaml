@@ -1,4 +1,4 @@
-# Region one batch. Source schedule: Monday 12:00 am -> cron "0 0 * * 1".
+# Region two batch. Source schedule: Monday 6:00 am -> cron "0 6 * * 1".
 #
 # Ships in --dry-run so applying this to any cluster is safe and needs no secrets.
 # To run live: populate the Secret (scripts/create-secret.*) and remove "--dry-run"
@@ -6,13 +6,13 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: lead-engine-naples
+  name: lead-engine-region-two
   namespace: lead-engine
   labels:
     app.kubernetes.io/name: lead-engine
-    region: naples
+    region: region-two
 spec:
-  schedule: "0 0 * * 1"
+  schedule: "0 6 * * 1"
   timeZone: "America/New_York"
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 200
@@ -26,7 +26,7 @@ spec:
         metadata:
           labels:
             app.kubernetes.io/name: lead-engine
-            region: naples
+            region: region-two
         spec:
           restartPolicy: OnFailure
           securityContext:
@@ -39,7 +39,7 @@ spec:
             - name: runner
               image: lead-engine-k8s:0.1.0
               imagePullPolicy: IfNotPresent
-              args: ["--dry-run", "--config", "/config/naples.json"]
+              args: ["--dry-run", "--config", "/config/region-two.json"]
               envFrom:
                 - configMapRef:
                     name: lead-engine-env

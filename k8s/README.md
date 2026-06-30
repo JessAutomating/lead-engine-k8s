@@ -24,17 +24,17 @@ Apply in order (namespace, then config, then the CronJobs):
 ```sh
 kubectl apply -f k8s/00-namespace.yaml
 kubectl apply -f k8s/10-configmap.yaml
-kubectl apply -f k8s/20-cronjob-naples.yaml
-kubectl apply -f k8s/21-cronjob-fortmyers.yaml
+kubectl apply -f k8s/20-cronjob-region-one.yaml
+kubectl apply -f k8s/21-cronjob-region-two.yaml
 ```
 
 Confirm:
 
 ```sh
 kubectl get cronjobs -n lead-engine
-# NAME                     SCHEDULE    TIMEZONE           SUSPEND   ACTIVE
-# lead-engine-fort-myers   0 6 * * 1   America/New_York   False     0
-# lead-engine-naples       0 0 * * 1   America/New_York   False     0
+# NAME                      SCHEDULE    TIMEZONE           SUSPEND   ACTIVE
+# lead-engine-region-one    0 0 * * 1   America/New_York   False     0
+# lead-engine-region-two    0 6 * * 1   America/New_York   False     0
 ```
 
 ## 2. Trigger a manual run (dry-run, in-cluster)
@@ -42,7 +42,7 @@ kubectl get cronjobs -n lead-engine
 You do not have to wait until Monday. Create a one-off Job from a CronJob:
 
 ```sh
-kubectl create job --from=cronjob/lead-engine-naples test-run -n lead-engine
+kubectl create job --from=cronjob/lead-engine-region-one test-run -n lead-engine
 kubectl wait --for=condition=complete job/test-run -n lead-engine --timeout=120s
 kubectl logs job/test-run -n lead-engine
 ```
@@ -50,15 +50,15 @@ kubectl logs job/test-run -n lead-engine
 Same for the other region:
 
 ```sh
-kubectl create job --from=cronjob/lead-engine-fort-myers test-run-fm -n lead-engine
-kubectl wait --for=condition=complete job/test-run-fm -n lead-engine --timeout=120s
-kubectl logs job/test-run-fm -n lead-engine
+kubectl create job --from=cronjob/lead-engine-region-two test-run-2 -n lead-engine
+kubectl wait --for=condition=complete job/test-run-2 -n lead-engine --timeout=120s
+kubectl logs job/test-run-2 -n lead-engine
 ```
 
 Clean up the manual Jobs:
 
 ```sh
-kubectl delete job test-run test-run-fm -n lead-engine
+kubectl delete job test-run test-run-2 -n lead-engine
 ```
 
 ## 3. Going live (optional)
