@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Placeholder Co Alpha",
+    "address": "100 Example Ave, Naples, FL 34102",
+    "phone": "(239) 555-0100",
+    "website": "",
+    "rating": 4.1,
+    "ratingCount": 12,
+    "category": "placeholder-category",
+    "placeId": "FIXTURE_ALPHA"
+  },
+  {
+    "title": "Example Group Bravo",
+    "address": "200 Sample St, Naples, FL 34103",
+    "phone": "(239) 555-0101",
+    "website": "https://example-bravo.test",
+    "rating": 3.6,
+    "ratingCount": 8,
+    "category": "placeholder-category",
+    "placeId": "FIXTURE_BRAVO"
+  },
+  {
+    "title": "Sample LLC Charlie",
+    "address": "300 Demo Blvd, Bonita Springs, FL 34134",
+    "phone": "(239) 555-0102",
+    "website": "https://example-charlie.test",
+    "rating": 4.9,
+    "ratingCount": 320,
+    "category": "placeholder-category",
+    "placeId": "FIXTURE_CHARLIE"
+  },
+  {
+    "title": "Demo Partners Delta",
+    "address": "400 Mock Rd, Fort Myers, FL 33901",
+    "phone": "(239) 555-0103",
+    "website": "https://example-delta.test",
+    "rating": 4.3,
+    "ratingCount": 40,
+    "category": "placeholder-category",
+    "placeId": "FIXTURE_DELTA"
+  }
+]

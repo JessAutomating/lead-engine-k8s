@@ -1,0 +1,8 @@
+{
+  "byWebsite": {
+    "https://example-bravo.test": "# Example Group Bravo\n\nWelcome to our site. Built with Wix. We are a local placeholder business. Call us to book an appointment. No online booking is available. Hours: Mon-Fri.",
+    "https://example-charlie.test": "# Sample LLC Charlie\n\nModern site powered by Next.js and Shopify. Book online, browse our store, and check out in seconds. Mobile friendly, fast, and fully featured.",
+    "https://example-delta.test": "# Demo Partners Delta\n\nA functional brochure website. About us, services, and a basic contact form. No scheduling or customer portal yet."
+  },
+  "default": "Website content for {{name}}. A standard brochure site with limited functionality."
+}

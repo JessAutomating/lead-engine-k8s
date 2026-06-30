@@ -1,0 +1,19 @@
+{
+  "name": "lead-engine-k8s",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Containerized weekly lead-generation batch runner, scheduled as a Kubernetes CronJob. Sanitized portfolio demo.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "lead-engine": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dry-run": "node src/index.js --dry-run",
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
