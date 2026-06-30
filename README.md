@@ -1,5 +1,7 @@
 # lead-engine-k8s
 
+[![CI](https://img.shields.io/github/actions/workflow/status/JessAutomating/lead-engine-k8s/ci.yml?branch=main&label=CI&logo=github)](https://github.com/JessAutomating/lead-engine-k8s/actions/workflows/ci.yml)
+
 A weekly lead-generation pipeline, packaged as a container and scheduled with
 Kubernetes CronJobs. This repo demonstrates how to take a finite, time-triggered
 batch job and run it on Kubernetes the way you would run any scheduled workload.
@@ -53,7 +55,7 @@ Both schedules use `timeZone: America/New_York`.
 `--dry-run` runs the whole pipeline against local fixtures. It makes zero network
 calls and needs no credentials.
 
-With Node 20+:
+With Node 22 (the version the Docker image and CI use):
 
 ```sh
 node src/index.js --dry-run

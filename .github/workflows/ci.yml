@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: dry-run test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      # The runner has zero dependencies and no lockfile, so there is nothing to
+      # install. npm test runs the node:test dry-run suite (no network, no secrets).
+      - run: npm test
