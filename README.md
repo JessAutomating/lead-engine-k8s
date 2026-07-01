@@ -1,6 +1,6 @@
 # lead-engine-k8s
 
-> A real weekly lead-gen pipeline, packaged as a container and run on a schedule by Kubernetes, with a zero-spend dry-run so anyone can try it.
+> A real weekly lead-gen pipeline, packaged as a container and run on a schedule by Kubernetes, with a zero-spend dry-run (a safe test run that makes no real API calls) so anyone can try it.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/JessAutomating/lead-engine-k8s/ci.yml?branch=main&label=CI&logo=github)](https://github.com/JessAutomating/lead-engine-k8s/actions/workflows/ci.yml)
@@ -10,9 +10,14 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Jesse_Jolly-0a66c2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jessegjolly)
 
 A weekly lead-generation pipeline (scrape, enrich, score, write, notify), packaged
-as a container and scheduled with two Kubernetes CronJobs. It shows how to take a
-finite, time-triggered batch job and run it on Kubernetes the way you would run any
-scheduled workload.
+as a container and scheduled with two Kubernetes CronJobs (scheduled tasks). It
+shows how to take a finite, time-triggered batch job and run it on Kubernetes the
+way you would run any scheduled workload.
+
+> **In plain terms:** this is a small program that finds sales leads once a week,
+> sorts the strong ones from the weak ones, and emails you a summary. It is built
+> to run by itself on a schedule, and you can try the whole thing for free with no
+> accounts and no passwords.
 
 New to Kubernetes? A CronJob is just a scheduled task: "run this every Monday at
 12am, then exit." Kubernetes starts the container on schedule, retries it if it
@@ -24,6 +29,10 @@ and runnable, but the API keys, spreadsheet IDs, targeting lists, and client
 identities are not. See [`NOTES.md`](NOTES.md) for the sanitized stage map.
 
 ## Architecture
+
+> **In plain terms:** this diagram shows the path a single lead takes, from finding
+> a business, to checking its website, to scoring it, to saving it in a spreadsheet,
+> to emailing you a summary. Follow the arrows from left to right.
 
 ```mermaid
 flowchart LR
@@ -42,16 +51,26 @@ flowchart LR
 
 ## What this demonstrates
 
+> **In plain terms:** this section lists the good engineering habits the project
+> shows off, like keeping settings and passwords separate from the code, and
+> shipping a safe test mode that costs nothing to run.
+
 - Modeling a recurring batch job as a Kubernetes `CronJob` (the right primitive
   for "run this on a schedule, then exit").
-- A clean split between code, configuration (`ConfigMap`), and secrets (`Secret`).
+- A clean split between code, configuration (`ConfigMap`, Kubernetes' store for
+  non-secret settings), and secrets (`Secret`, Kubernetes' store for sensitive
+  values like API keys).
 - A container that defaults to a safe, offline `--dry-run` so it can be tested
   end to end with zero API spend and zero real data.
-- Production-shaped manifests: `concurrencyPolicy: Forbid`, `backoffLimit`,
-  resource requests and limits, timezone-aware schedules, non-root and
+- Production-shaped manifests: `concurrencyPolicy: Forbid` (never let two runs
+  overlap), `backoffLimit` (how many times to retry a failed run before giving
+  up), resource requests and limits, timezone-aware schedules, non-root and
   read-only-root-filesystem hardening.
 
 ## The pipeline
+
+> **In plain terms:** here are the five steps the program runs for each group of
+> businesses, and what happens to leads that have no website or that score too low.
 
 Five stages, run once per market segment, mirroring the source automation:
 
@@ -67,6 +86,10 @@ leads into a qualified tab and a low-score tab.
 
 ## Origin
 
+> **In plain terms:** the original version runs as two automations on a workflow
+> tool called n8n. This repo copies only the shape of that setup, not the private
+> data, so nothing real is exposed.
+
 The pattern comes from two scheduled automations built in n8n that run the same
 node graph on two weekly schedules. This repo reproduces the STRUCTURE only:
 
@@ -78,6 +101,10 @@ node graph on two weekly schedules. This repo reproduces the STRUCTURE only:
 Both schedules use `timeZone: America/New_York`.
 
 ## Quickstart (dry-run, no secrets)
+
+> **In plain terms:** this shows how to run the whole thing on your own computer in
+> test mode. It uses built-in sample data, so it needs no accounts, no passwords,
+> and costs nothing.
 
 `--dry-run` runs the whole pipeline against local fixtures. It makes zero network
 calls and needs no credentials.
@@ -101,6 +128,10 @@ Expected: a JSON run summary plus a rendered summary-email preview. The bare
 
 ## Run it on Kubernetes
 
+> **In plain terms:** these commands install the scheduled jobs into a local
+> Kubernetes setup and let you trigger a run right away instead of waiting for
+> Monday. It stays in safe test mode.
+
 Tested on Docker Desktop Kubernetes (context `docker-desktop`). Full command list
 is in [`k8s/README.md`](k8s/README.md). Short version:
 
@@ -121,6 +152,10 @@ safe and requires no secrets.
 
 ## Configuration and credentials
 
+> **In plain terms:** this explains where each kind of setting lives. Ordinary
+> settings sit in plain config files, and passwords stay in a separate protected
+> place that never gets saved into the code.
+
 Non-secret settings live in the config file / `ConfigMap`. Secrets live only in
 the environment / Kubernetes `Secret` and are never written to disk by the runner.
 
@@ -131,6 +166,10 @@ the environment / Kubernetes `Secret` and are never written to disk by the runne
 | `.env` / `Secret`    | `APIFY_TOKEN`, `FIRECRAWL_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_ACCESS_TOKEN` |
 
 ### Wiring real credentials (never committed)
+
+> **In plain terms:** these are the steps to switch from test mode to real mode by
+> adding your own accounts and keys. Your keys stay on your machine and are never
+> uploaded.
 
 1. Copy `.env.example` to `.env` and fill in real values. `.env` is gitignored.
 2. Create the Kubernetes Secret from that `.env`:
@@ -150,6 +189,9 @@ missing.
 
 ## Tech
 
+> **In plain terms:** this table lists the main tools used and the reason each one
+> was chosen. In short, it stays small and simple on purpose.
+
 | Layer             | Choice                                          | Why                                       |
 | ----------------- | ----------------------------------------------- | ----------------------------------------- |
 | Runtime           | Node.js 22                                      | modern, built-in `fetch` and test runner  |
@@ -163,6 +205,9 @@ missing.
 
 ## Security and sanitization
 
+> **In plain terms:** this describes how private information is kept out of the
+> project. Real keys and data are removed, and the logs hide any secret values.
+
 - `.gitignore` excludes `.env`, `.env.*` (except `.env.example`), generated secret
   manifests, and key files.
 - The logger redacts known secret values from every log line.
@@ -170,6 +215,9 @@ missing.
   are present. The scoring prompt is vendor neutral.
 
 ## Status
+
+> **In plain terms:** a quick checklist of what works today. The free test mode is
+> confirmed working, and real mode is ready once you add your own keys.
 
 - Dry-run pipeline: working, covered by CI (`node:test`).
 - Docker image: builds, runs as a non-root user, defaults to `--dry-run`.
@@ -180,6 +228,9 @@ missing.
 - Sanitization: CLEAN (no real keys, sheet IDs, geography, verticals, or identity).
 
 ## Project layout
+
+> **In plain terms:** a map of the folders in this repo and what each one holds, so
+> you can find your way around.
 
 ```
 src/                 runner: CLI, config, logger, http, pipeline, stages/
