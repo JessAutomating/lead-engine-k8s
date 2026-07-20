@@ -7,6 +7,7 @@
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-CronJob-3b5bdb?logo=kubernetes&logoColor=white)](k8s/)
 [![Docker](https://img.shields.io/badge/Docker-Alpine-000000?logo=docker&logoColor=white)](Dockerfile)
 [![Built with Node.js](https://img.shields.io/badge/Built_with-Node.js_22-7a5cff?logo=nodedotjs&logoColor=white)](package.json)
+[![Zero-spend dry run](https://img.shields.io/badge/dry--run-zero_spend-00b894)](#quickstart-dry-run-no-secrets)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Jesse_Jolly-0a66c2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jessegjolly)
 
 A weekly lead-generation pipeline (scrape, enrich, score, write, notify), packaged
@@ -27,6 +28,21 @@ recurring batch job like this one needs.
 This is a sanitized portfolio version of a real automation: the code is fully here
 and runnable, but the API keys, spreadsheet IDs, targeting lists, and client
 identities are not. See [`NOTES.md`](NOTES.md) for the sanitized stage map.
+
+## Contents
+
+- [Architecture](#architecture)
+- [What this demonstrates](#what-this-demonstrates)
+- [The pipeline](#the-pipeline)
+- [Origin](#origin)
+- [Quickstart (dry-run, no secrets)](#quickstart-dry-run-no-secrets)
+- [Run it on Kubernetes](#run-it-on-kubernetes)
+- [Configuration and credentials](#configuration-and-credentials)
+- [Tech](#tech)
+- [Security and sanitization](#security-and-sanitization)
+- [Status](#status)
+- [Project layout](#project-layout)
+- [License](#license)
 
 ## Architecture
 
