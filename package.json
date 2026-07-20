@@ -5,7 +5,7 @@
   "description": "Containerized weekly lead-generation batch runner, scheduled as a Kubernetes CronJob. Sanitized portfolio demo.",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "bin": {
     "lead-engine": "src/index.js"
